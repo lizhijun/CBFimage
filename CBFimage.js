@@ -1,4 +1,9 @@
-// get args
+/*
+ * version 1.0
+ * @author LoeiFy@gmail.com
+ *
+ */
+
 function CBFimage(args) {
     // define
     args.ver = args.ver || 0;
@@ -114,18 +119,7 @@ function getImage(url, args) {
     }
 
     img.onload = function() {
-        var bg = new canvasBlur(args.tag, img);
-        
-        if (args.blur) bg.blur(args.blur);
-    
-        fullBg(args.tag, img.width, img.height)
-        window.onresize = function() {
-            fullBg(args.tag, img.width, img.height)
-        }
-
-        setTimeout(function() {
-            args.tag.style.opacity = 1;
-        }, 500)
+        img2canvas(img, args)
     }
 } 
 
@@ -134,44 +128,50 @@ function getImage(url, args) {
  * http://blogs.adobe.com/webplatform/2012/01/13/html5-image-progress-events/
  */
 function loadImage(imageURI, args) {
-    var request, loadtag;
-                    
-    request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
                 
     request.onloadstart = function() {
-        args.tag.insertAdjacentHTML('afterend', '<div id="loading"></div>')
-        loadtag = document.getElementById('loading');
-    };
+        args.start()
+    }
 
     request.onprogress = function(e) {
-        loadtag.style.width = e.loaded / e.total * window.innerWidth +'px';
-    };
+        args.progress(e.loaded, e.total)
+    }
 
     request.onload = function() {
-        var img = new Image();
-        img.src = 'data:image/jpeg;base64,' + base64Encode(request.responseText);
-        window.localStorage.setItem('canvasimgsrc', img.src)
-        window.localStorage.setItem('canvasimgver', args.ver)
+        if (this.status == 200) {
+            var img = new Image();
+            img.src = 'data:image/jpeg;base64,' + base64Encode(request.responseText);
+            img2canvas(img, args)
 
-        var bg = new canvasBlur(args.tag, img);
-        
-        if (args.blur) bg.blur(args.blur);
-    
-        fullBg(args.tag, img.width, img.height)
-        window.onresize = function() {
-            fullBg(args.tag, img.width, img.height)
+            // save to localStorage
+            window.localStorage.setItem('canvasimgsrc', img.src)
+            window.localStorage.setItem('canvasimgver', args.ver)
         }
-
-        setTimeout(function() {
-            args.tag.style.opacity = 1;
-        }, 500)
-    };
+    }
 
     request.onloadend = function() {
-        loadtag.parentNode.removeChild(loadtag)
-    };
-    
+        args.end()
+    }
+
     request.open("GET", imageURI, true)
     request.overrideMimeType('text/plain; charset=x-user-defined')
     request.send(null)
+}
+
+/* 
+ * canvas image and full size canvas
+ */
+function img2canvas(image, args) {
+    var bg = new canvasBlur(args.tag, image);
+    if (args.blur) bg.blur(args.blur);
+
+    fullBg(args.tag, image.width, image.height)
+    window.onresize = function() {
+        fullBg(args.tag, image.width, image.height)
+    }
+
+    setTimeout(function() {
+        args.tag.style.opacity = 1;
+    }, 500)
 }
