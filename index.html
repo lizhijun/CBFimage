@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         progress: function(loaded, total) {
             document.getElementById('loading').style.width = loaded / total * window.innerWidth +'px';
-            document.getElementById('text').textContent = loaded / total * 100 +'%';
+            document.getElementById('text').textContent = (loaded / total).toFixed(2) * 100 +'%';
         },
         end: function() {
             document.getElementById('loading').parentNode.removeChild(document.getElementById('loading'))
