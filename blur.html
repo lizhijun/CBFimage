@@ -3,74 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <title>CBFimage</title>
-<style>
-body, canvas, div {
-	margin: 0;
-	padding: 0;
-}
-html, body {
-    background: #fff;
-    height: 100%;
-}
-body {
-    position: relative;
-    overflow: hidden;
-    background: #333946;
-}
-#canvas {
-    opacity: 0;
-    -webkit-transition: opacity 1s ease-in-out;
-    -moz-transition: opacity 1s ease-in-out;
-    transition: opacity 1s ease-in-out;
-}
-#loading {
-    background: rgba(0,0,0,.1);
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0;
-    -webkit-transition: width .1s ease-in-out;
-    -moz-transition: width .1s ease-in-out;
-    transition: width .1s ease-in-out;
-}
-#text {
-    z-index: 1;
-    text-align: center;
-    color: #fff;
-    font-size: 40px;
-    width: 100%;
-    position: absolute;
-    top: 45%;
-}
-</style>
+<link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<canvas id="canvas"></canvas>
+<canvas id="canvas" url="alma.jpg" version="0" blur="5"></canvas>
 
 <script src="CBFimage.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() { 
-    CBFimage({
-        id: 'canvas',
-        url: 'alma.jpg',
-        ver: 0,
-        blur: 5,
-        start: function() {
-            document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="loading"></div>')
-            document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="text"></div>')
-        },
-        progress: function(loaded, total) {
-            document.getElementById('loading').style.width = loaded / total * window.innerWidth +'px';
-            document.getElementById('text').textContent = (loaded / total).toFixed(2) * 100 +'%';
-        },
-        end: function() {
-            document.getElementById('loading').parentNode.removeChild(document.getElementById('loading'))
-            document.getElementById('text').parentNode.removeChild(document.getElementById('text'))
-        }
-    })
-})
-</script>
+<script src="script.js"></script>
 </body>
 </html>

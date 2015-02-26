@@ -12,9 +12,6 @@
 ```js
 CBFimage({
     id: 'canvas', /*（必须）定义canvas作用id */
-    url: 'alma.jpg', /*（必须）图片地址，不支持跨域 */
-    ver: 0, /*（可选）定义版本号，用于更新图片 */
-    blur: 0, /*（可选）定义图片模糊，数字越大，模糊度越高，默认 0 */
 
     /* 以下接口函数只触发在首次图片的加载，或者是更新图片时候 */
     start: function() {
@@ -39,7 +36,12 @@ CBFimage({
 ```
 #### html
 ```html
-<canvas id="canvas"></canvas>
+<!-- 
+	url: 图片地址
+ 	version: 定义版本（可选)，不支持跨域
+	blur: 定义模糊（可选），默认不模糊 0，数字越大，模糊度越高 
+-->
+<canvas id="canvas" url="alma.jpg" version="0" blur="0"></canvas>
 ```
 ### 感谢
 - http://blogs.adobe.com/webplatform/2012/01/13/html5-image-progress-events/

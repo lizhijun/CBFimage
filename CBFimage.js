@@ -1,15 +1,14 @@
 /*
- * @version 1.1
+ * @version 1.2
  * @author LoeiFy@gmail.com
  */
 
 function CBFimage(args) {
-    // define
-    args.ver = args.ver || 0;
-    args.blur = args.blur > 0 ? parseInt(args.blur) : 0;
     args.tag = document.getElementById(args.id);
-
-    getImage(args.url, args)
+    args.ver = parseInt(args.tag.getAttribute('version')) || 0;
+    args.blur = parseInt(args.tag.getAttribute('blur')) > 0 ? parseInt(args.tag.getAttribute('blur')) : 0;
+    args.url = args.tag.getAttribute('url');
+    getImage(args)
 }
 
 /* 
@@ -102,19 +101,19 @@ function fullBg(id, w, h) {
 /* 
  * get image form localStorage or url
  */
-function getImage(url, args) {
+function getImage(args) {
     var imagesrc = window.localStorage.getItem('canvasimgsrc'),
-        imagever = window.localStorage.getItem('canvasimgver'),
+        imagever = parseInt(window.localStorage.getItem('canvasimgver')),
         img = new Image();
 
-    if (parseInt(imagever) !== args.ver) {
-        loadImage(url, args)
+    if (imagever != args.ver) {
+        loadImage(args)
         return;
     }
 
     img.src = imagesrc;
     img.onerror = function() {
-        loadImage(url, args)
+        loadImage(args)
     }
 
     img.onload = function() {
@@ -126,7 +125,7 @@ function getImage(url, args) {
  * image load progress
  * http://blogs.adobe.com/webplatform/2012/01/13/html5-image-progress-events/
  */
-function loadImage(imageURI, args) {
+function loadImage(args) {
     var request = new XMLHttpRequest();
                 
     request.onloadstart = function() {
@@ -153,7 +152,7 @@ function loadImage(imageURI, args) {
         args.end()
     }
 
-    request.open("GET", imageURI, true)
+    request.open("GET", args.url, true)
     request.overrideMimeType('text/plain; charset=x-user-defined')
     request.send(null)
 }
