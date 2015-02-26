@@ -1,0 +1,39 @@
+body, canvas, div {
+	margin: 0;
+	padding: 0;
+}
+html, body {
+    background: #fff;
+    height: 100%;
+}
+body {
+    position: relative;
+    overflow: hidden;
+    background: #333946;
+}
+#canvas {
+    opacity: 0;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+#loading {
+    background: rgba(0,0,0,.1);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    -webkit-transition: width .1s ease-in-out;
+    -moz-transition: width .1s ease-in-out;
+    transition: width .1s ease-in-out;
+}
+#text {
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    font-size: 40px;
+    width: 100%;
+    position: absolute;
+    top: 45%;
+}
