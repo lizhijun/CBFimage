@@ -160,17 +160,22 @@ function loadImage(imageURI, args) {
 
 /* 
  * canvas image and full size canvas
+ * image must loaded (firefox)
+ * image load form localStorage will fire complete 
  */
 function img2canvas(image, args) {
-    var bg = new canvasBlur(args.tag, image);
-    if (args.blur) bg.blur(args.blur);
+    image.onload = function() {
+        var bg = new canvasBlur(args.tag, image);
+        if (args.blur) bg.blur(args.blur);
 
-    fullBg(args.tag, image.width, image.height)
-    window.onresize = function() {
         fullBg(args.tag, image.width, image.height)
-    }
+        window.onresize = function() {
+            fullBg(args.tag, image.width, image.height)
+        }
 
-    setTimeout(function() {
-        args.tag.style.opacity = 1;
-    }, 500)
+        setTimeout(function() {
+            args.tag.style.opacity = 1;
+        }, 500)
+    }
+    if (image.complete) image.onload();
 }
