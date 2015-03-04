@@ -1,20 +1,37 @@
 /*
- * @version 1.3
+ * Image loading progress, canvas display image width custom blur
+ *
+ * html:
+ * <canvas id="tag" url="image url" version="image version number" blur="custom image blur, integer"></canvas>
+ *
+ * @param   {string}    id          canvas id
+ * @param   {boolean}   cache       whether to cache image data
+ * @param   {function}  start       image load begin callback
+ * @param   {function}  progress    image loading callback
+ * @param   {function}  end         image loaded callback
+ *
+ * @version 1.0.0
  * @author LoeiFy@gmail.com
+ * http://lorem.in/ | under MIT license
  */
 
 ;(function(window, undefined) {
 
     "use strict";
 
-    var CBFimage = function (args) {
+    var CBFimage = function(args) {
+        // arguments
         args.tag = document.getElementById(args.id);
-        args.ver = parseInt(args.tag.getAttribute('version')) || 0;
-        args.blur = parseInt(args.blur) > 0 ? parseInt(args.blur) : 0;
+        args.ver = args.tag.getAttribute('version');
         args.url = args.tag.getAttribute('url');
-        args.cache = args.cache || true;
+        args.cache = args.cache.toString() === 'false' ? false : true;
+        var blur = parseInt(args.tag.getAttribute('blur')) || 0;
+        args.blur = blur <= 10 ? blur : 0;
+
+        // process image
         getImage(args)
     }
+
 
     /* 
      * base64 Encode
@@ -63,7 +80,6 @@
         this.element.height = this.image.height;
 
         this.context = this.element.getContext('2d');
-        
         this.context.drawImage(this.image,0,0)
     }
     canvasBlur.prototype.blur = function(i) {
@@ -107,11 +123,12 @@
      * get image form localStorage or url
      */
     function getImage(args) {
-        var imagesrc = window.localStorage.getItem('canvasimgsrc'),
-            imagever = parseInt(window.localStorage.getItem('canvasimgver')),
+        var imagesrc = window.localStorage.getItem('CBFimageSRC'),
+            imagever = window.localStorage.getItem('CBFimageVER'),
+            imageurl = window.localStorage.getItem('CBFimageURL'),
             img = new Image();
 
-        if (imagever != args.ver) {
+        if (imagever != args.ver || imageurl != args.url) {
             loadImage(args)
             return;
         }
@@ -121,9 +138,7 @@
             loadImage(args)
         }
 
-        img.onload = function() {
-            img2canvas(img, args)
-        }
+        img2canvas(img, args)
     } 
 
     /* 
@@ -138,6 +153,8 @@
         }
 
         request.onprogress = function(e) {
+            // It's possible total = 0
+            if (parseInt(e.total) === 0) return;
             args.progress(e.loaded, e.total)
         }
 
@@ -149,8 +166,9 @@
 
                 // save to localStorage
                 if (args.cache) {
-                    window.localStorage.setItem('canvasimgsrc', img.src)
-                    window.localStorage.setItem('canvasimgver', args.ver)
+                    window.localStorage.setItem('CBFimageSRC', img.src)
+                    window.localStorage.setItem('CBFimageVER', args.ver)
+                    window.localStorage.setItem('CBFimageURL', args.url)
                 }
             }
         }
@@ -159,7 +177,7 @@
             args.end()
         }
 
-        request.open("GET", args.url, true)
+        request.open("GET", args.url +'?'+ +new Date, true)
         request.overrideMimeType('text/plain; charset=x-user-defined')
         request.send(null)
     }
