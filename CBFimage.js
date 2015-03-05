@@ -29,6 +29,7 @@
         args.blur = blur <= 10 ? blur : 0;
 
         // style
+        args.tag.parentNode.style.overflow = 'hidden';
         args.tag.style.opacity = '0';
         args.tag.style.transition = 'opacity .5s ease-in-out';
         args.tag.style.WebkitTransition = 'opacity .5s ease-in-out';
@@ -108,8 +109,8 @@
      * full background
      */
     function fullBg(id, w, h) {
-        var _height = window.innerHeight,
-            _width = window.innerWidth,
+        var _height = id.parentNode.offsetHeight,
+            _width = id.parentNode.offsetWidth,
             ratio = h / w;
 
         if (_height / _width > ratio) {
