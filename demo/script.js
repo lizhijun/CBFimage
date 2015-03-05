@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() { 
     CBFimage({
         id: 'canvas',
-        cache: false,
+        cache: true,
         start: function() {
             document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="loading"></div>')
             document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="text"></div>')

@@ -1,8 +1,8 @@
 /*
  * Image loading progress, canvas display image width custom blur
  *
- * html:
- * <canvas id="tag" url="image url" version="image version number" blur="custom image blur, integer"></canvas>
+ * how to use:
+ * https://github.com/LoeiFy/CBFimage/blob/master/README.md
  *
  * @param   {string}    id          canvas id
  * @param   {boolean}   cache       whether to cache image data
@@ -27,6 +27,12 @@
         args.cache = args.cache.toString() === 'false' ? false : true;
         var blur = parseInt(args.tag.getAttribute('blur')) || 0;
         args.blur = blur <= 10 ? blur : 0;
+
+        // style
+        args.tag.style.opacity = '0';
+        args.tag.style.transition = 'opacity .5s ease-in-out';
+        args.tag.style.WebkitTransition = 'opacity .5s ease-in-out';
+        args.tag.style.MozTransition = 'opacity .5s ease-in-out';
 
         // process image
         getImage(args)
@@ -133,12 +139,15 @@
             return;
         }
 
-        img.src = imagesrc;
         img.onerror = function() {
             loadImage(args)
         }
 
-        img2canvas(img, args)
+        img.onload = function() {
+            setTimeout(function() {img2canvas(img, args)}, 500)
+        }
+
+        img.src = imagesrc;
     } 
 
     /* 
@@ -197,9 +206,7 @@
                 fullBg(args.tag, image.width, image.height)
             }
 
-            setTimeout(function() {
-                args.tag.style.opacity = 1;
-            }, 500)
+            args.tag.style.opacity = '1';
         }
         if (image.complete) image.onload();
     }
