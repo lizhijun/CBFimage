@@ -17,21 +17,22 @@ document.addEventListener('DOMContentLoaded', function() {
             cache: false,
             start: function() {
                 document.getElementById(target).insertAdjacentHTML('afterend', '<div id="loading"></div>')
+                tag.nextElementSibling.innerHTML = '';
                 var text = document.createElement('p');
                 text.innerHTML = 'start loading ...';
-                tag.parentNode.appendChild(text)
+                tag.nextElementSibling.appendChild(text)
             },
             progress: function(loaded, total) {
                 document.getElementById('loading').style.width = loaded / total * (window.innerWidth * 0.7) +'px';
                 var text = document.createElement('p');
                 text.innerHTML = 'loaded: '+ loaded +' ### total: '+ total;
-                tag.parentNode.appendChild(text)
+                tag.nextElementSibling.appendChild(text)
             },
             end: function() {
                 document.getElementById('loading').parentNode.removeChild(document.getElementById('loading'))
                 var text = document.createElement('p');
                 text.innerHTML = 'done';
-                tag.parentNode.appendChild(text)
+                tag.nextElementSibling.appendChild(text)
             }
         })
     }
