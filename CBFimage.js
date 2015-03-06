@@ -31,6 +31,7 @@
         // style
         args.tag.parentNode.style.overflow = 'hidden';
         args.tag.style.opacity = '0';
+        args.tag.style.display = 'block';
         args.tag.style.transition = 'opacity .5s ease-in-out';
         args.tag.style.WebkitTransition = 'opacity .5s ease-in-out';
         args.tag.style.MozTransition = 'opacity .5s ease-in-out';

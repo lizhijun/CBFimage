@@ -12,7 +12,8 @@
 ```js
 CBFimage({
     id: 'canvas', /*（必须）定义canvas作用id */
-
+	cache: 'true', /* (可选) 设定是否缓存，默认true，当为 false 时候每次都会重新加载图片 */
+	
     /* 以下接口函数只触发在首次图片的加载，或者是更新图片时候 */
     start: function() {
         // 图片开始加载
@@ -25,21 +26,12 @@ CBFimage({
     }
 })
 ```
-#### css
-```css
-#canvas {
-    opacity: 0;
-    -webkit-transition: opacity 1s ease-in-out;
-    -moz-transition: opacity 1s ease-in-out;
-    transition: opacity 1s ease-in-out;
-}
-```
 #### html
 ```html
 <!-- 
 	url: 图片地址
- 	version: 定义版本（可选)，不支持跨域
-	blur: 定义模糊（可选），默认不模糊 0，数字越大，模糊度越高 
+ 	version: 定义版本（可选)，注意不支持跨域
+	blur: 定义模糊（可选 0－10），默认不模糊 0，数字越大，模糊度越高 
 -->
 <canvas id="canvas" url="alma.jpg" version="0" blur="0"></canvas>
 ```
