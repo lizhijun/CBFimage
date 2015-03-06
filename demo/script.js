@@ -1,17 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() { 
-    CBFimage({
-        id: 'canvas',
-        start: function() {
-            document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="loading"></div>')
-            document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="text"></div>')
-        },
-        progress: function(loaded, total) {
-            document.getElementById('loading').style.width = loaded / total * window.innerWidth +'px';
-            document.getElementById('text').textContent = (loaded / total).toFixed(2) * 100 +'%';
-        },
-        end: function() {
-            document.getElementById('loading').parentNode.removeChild(document.getElementById('loading'))
-            document.getElementById('text').parentNode.removeChild(document.getElementById('text'))
-        }
-    })
+
+    var btn = document.getElementsByTagName('button');
+
+    for (var i = 0; i < btn.length; i ++) {
+        
+        btn[i].addEventListener('click', function() {
+            var target = this.getAttribute('target');
+            CBF(target, this)
+        }, false)
+
+    }
+
+    function CBF(target, tag) {
+        CBFimage({
+            id: target,
+            cache: false,
+            start: function() {
+                document.getElementById(target).insertAdjacentHTML('afterend', '<div id="loading"></div>')
+                tag.nextElementSibling.innerHTML = '';
+                var text = document.createElement('p');
+                text.innerHTML = 'start loading ...';
+                tag.nextElementSibling.appendChild(text)
+            },
+            progress: function(loaded, total) {
+                document.getElementById('loading').style.width = loaded / total * (window.innerWidth * 0.7) +'px';
+                var text = document.createElement('p');
+                text.innerHTML = 'loaded: '+ loaded +' ### total: '+ total;
+                tag.nextElementSibling.appendChild(text)
+            },
+            end: function() {
+                document.getElementById('loading').parentNode.removeChild(document.getElementById('loading'))
+                var text = document.createElement('p');
+                text.innerHTML = 'done';
+                tag.nextElementSibling.appendChild(text)
+            }
+        })
+    }
 })

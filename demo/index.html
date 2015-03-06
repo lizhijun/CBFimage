@@ -6,7 +6,39 @@
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<canvas id="canvas" url="alma.jpg" version="0" blur="0"></canvas>
+
+<header>
+    <h1>CBFimage</h1>
+    <p>A plugin for image loading progress, canvas display image width custom blur</p>
+    <a class="btn" href="https://github.com/LoeiFy/CBFimage" target="_blank">Github</a>
+</header>
+
+<div class="demo normal">
+    <h3>Normal</h3>
+    <div class="cv">
+    <canvas id="canvas1" url="alma.jpg" version="0" blur="0"></canvas>
+    </div><!--
+    --><div class="info">
+        <button target="canvas1">load image</button>
+        <div></div>
+    </div>
+</div>
+
+<div class="demo blur">
+    <h3>Blur</h3>
+    <div class="cv">
+    <canvas id="canvas2" url="alma.jpg" version="0" blur="5"></canvas>
+    </div><!--
+    --><div class="info">
+        <button target="canvas2">load image</button>
+        <div></div>
+    </div>
+</div>
+
+<footer>
+    <a class="btn" href="https://github.com/LoeiFy/CBFimage" target="_blank">Github</a>
+    <a class="btn" href="http://loeify.github.io/CBFimage/demo/full.html" target="_blank">wiew fullpage example</a>
+</footer>
 
 <script src="../CBFimage.js"></script>
 <script src="script.js"></script>
