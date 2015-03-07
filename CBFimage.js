@@ -1,5 +1,5 @@
 /*
- * Image loading progress, canvas display image width custom blur
+ * image loading progress, canvas display image width custom blur
  *
  * how to use:
  * https://github.com/LoeiFy/CBFimage/blob/master/README.md

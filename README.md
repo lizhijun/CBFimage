@@ -1,4 +1,45 @@
 # CBFimage
+A simple plugin show image loading progress, canvas display image width custom blur
+### Demo
+http://loeify.github.io/CBFimage/demo/
+### How to use
+load javascript: `<script src="CBFimage.js"></script>`
+#### javascript
+```js
+CBFimage({
+    id: 'canvas', /*（must）canvas id */
+    cache: 'true', /* (optional) set if cache image, default true, always load image from sever when set false */
+	
+    /* The following interface only fire when loading image */
+    start: function() {
+        // start load image
+    },
+    progress: function(loaded, total) {
+        // loading image
+    },
+    end: function() {
+        // done load image
+    }
+})
+```
+#### html
+```html
+<!-- 
+	url: image url, not support cross-domain requests
+ 	version: define version（optional, for update image)，
+	blur: define blur（optional 0－10），default 0 
+-->
+<canvas id="canvas" url="alma.jpg" version="0" blur="0"></canvas>
+```
+### Thanks
+- http://blogs.adobe.com/webplatform/2012/01/13/html5-image-progress-events/
+- image from：alma
+
+### License
+MIT
+
+
+# CBFimage
 一个显示图片加载进度插件，利用 canvas 显示图片，同时可以自定义图片模糊程度。
 ### 预览地址
 http://loeify.github.io/CBFimage/demo/
@@ -28,8 +69,8 @@ CBFimage({
 #### html
 ```html
 <!-- 
-	url: 图片地址
- 	version: 定义版本（可选)，注意不支持跨域
+	url: 图片地址，注意不支持跨域
+ 	version: 定义版本（可选)，用于更新图片
 	blur: 定义模糊（可选 0－10），默认不模糊 0，数字越大，模糊度越高 
 -->
 <canvas id="canvas" url="alma.jpg" version="0" blur="0"></canvas>
